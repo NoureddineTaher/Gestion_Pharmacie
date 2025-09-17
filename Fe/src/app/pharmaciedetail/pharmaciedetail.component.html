@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+</head>
+<body>
+    <div class="container">
+      <div>Pharmacie {{pharmacie.pharmacieName}} </div>
+      <ul>
+        <li>id :{{pharmacie.id}}</li>
+        <li>date from :{{pharmacie.dateFrom}}</li>
+        <li>date to :{{pharmacie.dateTo}}</li>
+        <li>lieu :{{pharmacie.lieu}}</li>
+        <li>pharmacie nom :{{pharmacie.pharmacieName}}</li>
+        <li>Adress :{{pharmacie.adress2}}</li>
+        <li>Tel :{{pharmacie.tel}}</li>
+      </ul>
+
+      <button routerLink="" class="btn btn-info" >Back</button>
+    </div>
+</body>
+</html>
+<router-outlet></router-outlet>

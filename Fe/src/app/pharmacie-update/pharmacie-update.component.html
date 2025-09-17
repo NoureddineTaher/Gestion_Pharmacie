@@ -1,0 +1,30 @@
+<form #todoForm="ngForm" class="form-group">
+  <div>
+      <label for="date_from">Date From: </label>
+      <input [(ngModel)]="pharmacie.dateFrom" type="text" id="date_from" name="date_from">
+  </div>
+  <div>
+    <label for="date_to">Date To: </label>
+    <input [(ngModel)]="pharmacie.dateTo" type="text" id="date_to" name="date_to">
+</div>
+  <div>
+      <label for="lieu">lieu:</label>
+      <input [(ngModel)]="pharmacie.lieu" type="text" id="lieu" name="lieu">
+  </div>
+  <div>
+    <label for="PharmacieName">Nom de Pharmacie:</label>
+    <input [(ngModel)]="pharmacie.pharmacieName" type="text" id="PharmacieName" name="PharmacieName">
+  </div>
+
+  <div>
+    <label for="Address2">Address 2:</label>
+    <input [(ngModel)]="pharmacie.adress2" type="text" id="Address2" name="Address2">
+  </div>
+
+  <div>
+      <label for="tel">tel :</label>
+      <input [(ngModel)]="pharmacie.tel" type="number" id="tel" name="tel">
+  </div>
+  <button type="submit" class="btn btn-success" (click)="save()">Save</button>
+
+</form>

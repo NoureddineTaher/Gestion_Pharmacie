@@ -1,0 +1,88 @@
+{
+  "info": {
+    "name": "Pharmacie API",
+    "_postman_id": "abcd1234-5678-efgh-ijkl-9876543210ab",
+    "description": "Collection pour tester l'API Pharmacie (Spring Boot + JPA + H2).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Pharmacies",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/pharmacies",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["pharmacies"]
+        }
+      }
+    },
+    {
+      "name": "Get Pharmacie by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/pharmacies/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["pharmacies", "1"]
+        }
+      }
+    },
+    {
+      "name": "Add Pharmacie",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"dateFrom\": \"2025-09-22\",\n  \"dateTo\": \"2025-09-25\",\n  \"lieu\": \"123 Rue Principale\",\n  \"pharmacieName\": \"Pharmacie Centrale\",\n  \"adress2\": \"Quartier Nord\",\n  \"tel\": 1234567890\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/pharmacie",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["pharmacie"]
+        }
+      }
+    },
+    {
+      "name": "Update Pharmacie",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"dateFrom\": \"2025-09-22\",\n  \"dateTo\": \"2025-09-25\",\n  \"lieu\": \"123 Rue Principale\",\n  \"pharmacieName\": \"Pharmacie Centrale Modifiée\",\n  \"adress2\": \"Quartier Nord\",\n  \"tel\": 9876543210\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8081/pharmacies",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["pharmacies"]
+        }
+      }
+    },
+    {
+      "name": "Delete Pharmacie",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8081/pharmacies/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8081",
+          "path": ["pharmacies", "1"]
+        }
+      }
+    }
+  ]
+}

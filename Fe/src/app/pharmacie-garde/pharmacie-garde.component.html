@@ -1,0 +1,42 @@
+<div class="container">
+  <h1 class="text-center">Create Pharmacy Garde</h1>
+  <form #todoForm="ngForm" class="form-group">
+
+  <div>
+    <label for="date_from" class="">Date From: </label>
+    <div >
+      <input  [(ngModel)]="pharmacie.dateFrom" class="form-control" type="datetime-local" id="date_from" name="date_from" value="2011-08-19T13:45:00">
+   </div>
+  </div>
+  <div>
+    <label for="date_to" class="">Date To: </label>
+    <div >
+      <input  [(ngModel)]="pharmacie.dateTo" class="form-control" type="datetime-local" id="date_to" name="date_to" value="2011-08-19T13:45:00">
+    </div>
+  </div>
+    <div>
+        <label for="lieu">Place:</label><br>
+        <input [(ngModel)]="pharmacie.lieu" type="text" id="lieu" name="lieu">
+    </div>
+    <div>
+      <label for="PharmacieName">Pharmacie name:</label><br>
+      <input [(ngModel)]="pharmacie.pharmacieName" type="text" id="PharmacieName" name="PharmacieName">
+    </div>
+
+    <div>
+      <label for="Address2">Location:</label><br>
+      <input [(ngModel)]="pharmacie.adress2" type="text" id="Address2" name="Address2">
+    </div>
+
+    <div>
+        <label for="tel">Phone:</label><br>
+        <input [(ngModel)]="pharmacie.tel" type="number" id="tel" name="tel">
+    </div><br>
+    <button type="submit" class="btn btn-primary" (click)="save()">Save</button>
+    <button routerLink="" class="btn btn-info" >Back</button>
+
+  </form>
+</div>
+
+
+
