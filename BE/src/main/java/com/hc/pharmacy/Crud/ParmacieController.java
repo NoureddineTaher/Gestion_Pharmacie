@@ -35,11 +35,12 @@ public class ParmacieController {
 	public void addPharmacie(@RequestBody Pharmacie p) {
 		pharmacieservice.addPharmacie(p);
 	}
-	
-	//update 
-	@RequestMapping(method = RequestMethod.PUT,value="/pharmacies")
-	public void updatePharmacie(@RequestBody Pharmacie p) {
-		pharmacieservice.updatePharmacie(p);	
+
+	// Update a pharmacy by ID
+	@RequestMapping(method = RequestMethod.PUT, value="/pharmacies/{id}")
+	public void updatePharmacie(@PathVariable int id, @RequestBody Pharmacie p) {
+		p.setId(id);  // Ensure the object has the correct ID
+		pharmacieservice.updatePharmacie(p);
 	}
 	
 	//delete 

@@ -22,7 +22,7 @@ public class Pharmacie {
 	public String lieu;
 	public String pharmacieName;
 	public String adress2;
-	public Long tel;
+	public String  tel;
 
 	
 	public Pharmacie() {
@@ -32,7 +32,7 @@ public class Pharmacie {
 
 
 	public Pharmacie(int id, String dateFrom, String dateTo, String lieu, String pharmacieName, String adress2,
-			Long tel) {
+					 String tel) {
 		super();
 		this.id = id;
 		this.dateFrom = dateFrom;
@@ -105,12 +105,12 @@ public class Pharmacie {
 	}
 
 
-	public Long getTel() {
+	public String  getTel() {
 		return tel;
 	}
 
 
-	public void setTel(Long tel) {
+	public void setTel(String  tel) {
 		this.tel = tel;
 	}
 
