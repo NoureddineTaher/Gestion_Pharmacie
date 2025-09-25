@@ -30,8 +30,8 @@ export class PharmaciGardeServiceService {
     return this.http.get<PharmacieGuard>(`http://localhost:8081/pharmacies/${id}`);
   }
 
-  updatepharmacie(p:PharmacieGuard ) {
-    return this.http.put<PharmacieGuard>(`http://localhost:8081/pharmacies`,p);
-  }
+  updatepharmacie(p: PharmacieGuard) {
+  return this.http.put(`http://localhost:8081/pharmacies/${p.id}`, p);
+}
 
 }
