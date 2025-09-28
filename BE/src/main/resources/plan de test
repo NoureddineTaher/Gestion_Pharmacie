@@ -1,0 +1,60 @@
+Plan de Tests - Application Gestion Pharmacie de Garde
+________________________________________
+1. Stratégie de Test
+Objectif
+Assurer que l’application Gestion Pharmacie de Garde (Spring Boot + Angular) fonctionne correctement, respecte les exigences (CRUD, validations, recherche), et est robuste face aux erreurs.
+Périmètre
+Fonctionnalités à tester :
+•	CRUD pharmacie de garde.
+•	Validation des champs (dateFrom, dateTo, pharmacieName, lieu, tel).
+•	Recherche/filtrage (si implémenté).
+Hors périmètre :
+•	Authentification / rôles (sauf si déjà intégrés).
+•	Performance à très grande charge.
+Types de tests prévus
+1.	Tests unitaires : services, validations de dates/champs (JUnit, Mockito).
+2.	Tests d’intégration backend : endpoints REST (MockMvc, RestAssured).
+3.	Tests UI Angular : formulaires CRUD (Cypress / Jasmine & Karma).
+4.	Tests API manuels : Postman.
+Niveaux de couverture
+•	Fonctionnelle : 100% des cas CRUD + validations critiques.
+•	Code backend : viser ≥ 80% de couverture.
+•	UI : tester scénarios critiques.
+Planification
+1.	Rédaction des cas de test (fait).
+2.	Implémentation des tests unitaires + intégration backend.
+3.	Automatisation des tests API via Postman/Newman.
+4.	Automatisation E2E Angular avec Cypress.
+5.	Exécution continue dans CI/CD.
+Rôles et responsabilités
+•	Développeur backend : tests unitaires + intégration.
+•	Développeur frontend : tests UI automatisés.
+•	QA / testeur : exécute tests Postman, valide conformité.
+Outils et environnements
+•	Backend : Spring Boot Test, JUnit 5, MockMvc, JaCoCo.
+•	Frontend : Angular TestBed, Jasmine/Karma, Cypress.
+•	API tests : Postman + Newman.
+•	CI/CD : GitHub Actions.
+•	DB : H2 pour tests, MySQL/Postgres pour prod.
+Gestion des anomalies
+•	Outil : GitHub Issues ou Jira.
+•	Toute anomalie → ticket avec étapes, résultat attendu/obtenu, priorité.
+Critères d’acceptation
+•	Tous les cas de test CRUD passent.
+•	Couverture du code backend ≥ 80%.
+•	Aucun bug bloquant ou critique.
+•	UI permet CRUD complet sans erreur.
+2. Plan de test CRUD
+
+#	Nom du test	Préconditions	Requête	Données / Paramètres	Résultat attendu / Observations
+1	createPharmacie_success	aucun (DB vide)	POST /pharmacie	{ JSON valide }	HTTP 201 ou 200 (selon implémentation). Vérifier que réponse contient id non nul, puis GET avec cet id retourne mêmes données
+2	createPharmacie_dateToBeforeDateFrom_error	aucun	POST /pharmacie	dateTo < dateFrom	HTTP 400 Bad Request. Le corps d’erreur indique le problème de date
+3	createPharmacie_missingRequiredField_error	aucun	POST /pharmacie	JSON sans pharmacieName ou sans lieu	HTTP 400. Message de validation clair
+4	getPharmacieById_success	une pharmacie déjà créée	GET /pharmacies/{id}	id existant	HTTP 200 + JSON de la pharmacie. Tous les champs corrects
+5	getPharmacieById_notFound	aucun ou id non existant	GET /pharmacies/{id}	id inexistant	HTTP 404. Corps d’erreur
+6	listAllPharmacies	plusieurs enregistrements en DB	GET /pharmacies	—	HTTP 200 + liste JSON. La liste contient au moins les objets créés
+7	updatePharmacie_success	pharmacie existante	PUT /pharmacies	JSON avec id + champs modifiés	HTTP 200. GET du même id reflète les changements
+8	updatePharmacie_notFound	aucun ou id inexistant	PUT /pharmacies	JSON avec id inexistant	HTTP 404. Erreur claire
+9	deletePharmacie_success	pharmacie existante	DELETE /pharmacies/{id}	id existant	HTTP 204 (ou 200 selon implémentation). Après suppression, GET sur id donne 404
+10	deletePharmacie_notFound	id inexistant	DELETE /pharmacies/{id}	id non existant	HTTP 404. Message d’erreur
+
