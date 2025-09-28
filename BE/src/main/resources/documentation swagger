@@ -1,0 +1,36 @@
+Plan de Documentation – Gestion Pharmacie de Garde
+Version : 1.0
+Date : 28/09/2025
+Noureddine TAHER
+________________________________________
+1. Introduction
+Cette documentation décrit les endpoints CRUD pour la gestion des pharmacies de garde. Elle est générée automatiquement avec Swagger / Springdoc OpenAPI et permet de tester les API directement depuis le navigateur.
+•	Framework : Spring Boot 2.1.4
+•	Base de données : H2 (local, mémoire persistante)
+•	Documentation Swagger : /swagger-ui.html
+•	JSON OpenAPI : /v3/api-docs
+________________________________________
+2. URL et serveur
+•	URL de base : http://localhost:8081
+•	Swagger UI : http://localhost:8081/swagger-ui.html
+•	OpenAPI JSON : http://localhost:8081/v3/api-docs
+•	H2 Console : http://localhost:8081/h2-console
+________________________________________
+3. Endpoints API
+Méthode	Endpoint	Description	Paramètres	Réponses
+POST	/pharmacies	Créer une nouvelle pharmacie de garde	JSON body { "pharmacieName", "lieu", "adress2", "tel", "dateFrom", "dateTo" }	201 Created / 400 Bad Request
+GET	/pharmacies/{id}	Récupérer une pharmacie par ID	id (path)	200 OK / 404 Not Found
+GET	/pharmacies	Lister toutes les pharmacies	—	200 OK
+PUT	/pharmacies	Mettre à jour une pharmacie existante	JSON body { "id", ...champs modifiés }	200 OK / 404 Not Found
+DELETE	/pharmacies/{id}	Supprimer une pharmacie par ID	id (path)	204 No Content / 404 Not Found
+________________________________________
+4. Description des champs JSON
+Champ	Type	Obligatoire	Description
+pharmacieName	String	Oui	Nom de la pharmacie
+lieu	String	Oui	Localisation principale
+adress2	String	Non	Adresse complémentaire
+tel	String	Oui	Numéro de téléphone
+dateFrom	Date (YYYY-MM-DD)	Oui	Date de début de garde
+dateTo	Date (YYYY-MM-DD)	Oui	Date de fin de garde
+________________________________________
+
