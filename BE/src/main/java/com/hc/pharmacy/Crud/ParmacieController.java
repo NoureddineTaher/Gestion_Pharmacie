@@ -3,50 +3,50 @@ package com.hc.pharmacy.Crud;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/pharmacies") // 🔥 Mapping global propre
 public class ParmacieController {
+
 	@Autowired
 	PharmacieService pharmacieservice;
-	
-	//get ALL
-	@GetMapping( "/pharmacies")
-	public  List<Pharmacie> getAllPharmacies() {
-		return pharmacieservice.getAllPharmacies();
-	}
-	
-	//get Pharmacie
-	@RequestMapping("/pharmacies/{id}")
-	public Pharmacie getPharmacie(@PathVariable int id) {
-		return pharmacieservice.getPharmacie(id);
-	}
-	
-	//ADD 
-	@RequestMapping(method = RequestMethod.POST, path="/pharmacie")
-	public void addPharmacie(@RequestBody Pharmacie p) {
-		pharmacieservice.addPharmacie(p);
+
+	// ✅ GET ALL
+	@GetMapping
+	public ResponseEntity<List<Pharmacie>> getAllPharmacies() {
+		return ResponseEntity.ok(pharmacieservice.getAllPharmacies());
 	}
 
-	// Update a pharmacy by ID
-	@RequestMapping(method = RequestMethod.PUT, value="/pharmacies/{id}")
-	public void updatePharmacie(@PathVariable int id, @RequestBody Pharmacie p) {
-		p.setId(id);  // Ensure the object has the correct ID
-		pharmacieservice.updatePharmacie(p);
+	// ✅ GET BY ID
+	@GetMapping("/{id}")
+	public ResponseEntity<Pharmacie> getPharmacie(@PathVariable int id) {
+		Pharmacie p = pharmacieservice.getPharmacie(id);
+		return ResponseEntity.ok(p);
 	}
-	
-	//delete 
-	@RequestMapping(method = RequestMethod.DELETE,value="/pharmacies/{id}")
-	public void deletePharmacie(@PathVariable int id) {
+
+	// ✅ CREATE
+	@PostMapping
+	public ResponseEntity<Pharmacie> addPharmacie(@RequestBody Pharmacie p) {
+		Pharmacie saved = pharmacieservice.addPharmacie(p);
+		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+	}
+
+	// ✅ UPDATE
+	@PutMapping("/{id}")
+	public ResponseEntity<Pharmacie> updatePharmacie(@PathVariable int id, @RequestBody Pharmacie p) {
+		p.setId(id);
+		Pharmacie updated = pharmacieservice.updatePharmacie(p);
+		return ResponseEntity.ok(updated);
+	}
+
+	// ✅ DELETE
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deletePharmacie(@PathVariable int id) {
 		pharmacieservice.deletePharmacie(id);
+		return ResponseEntity.noContent().build();
 	}
-
 }

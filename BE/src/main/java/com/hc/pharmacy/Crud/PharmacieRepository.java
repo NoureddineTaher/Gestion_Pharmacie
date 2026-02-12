@@ -1,7 +1,7 @@
 package com.hc.pharmacy.Crud;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PharmacieRepository extends CrudRepository<Pharmacie, Integer>{
+public interface PharmacieRepository extends JpaRepository<Pharmacie, Integer> {
 
 }

@@ -13,7 +13,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("API Gestion Pharmacie de Garde")
-                        .version("1.0")
+                        .version("3.0")
                         .description("Documentation des endpoints CRUD"));
     }
 }
