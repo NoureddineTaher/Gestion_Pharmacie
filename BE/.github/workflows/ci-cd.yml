@@ -23,18 +23,34 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # Étape 3 : Build Maven avec le wrapper
+      # Étape 3 : Cache Maven pour accélérer les builds
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      # Étape 4 : Build Maven avec le wrapper
       - name: Build with Maven
         run: ./mvnw clean install -B
 
-      # Étape 4 : Exécuter les tests unitaires
+      # Étape 5 : Exécuter les tests unitaires
       - name: Run tests
         run: ./mvnw test -B
 
-      # Étape 5 : Créer le package jar
+      # Étape 6 : Créer le package jar
       - name: Package jar
         run: ./mvnw package -B
 
-      # Étape optionnelle : Afficher le fichier jar généré
+      # Étape 7 : Afficher le contenu du dossier target
       - name: List target folder
         run: ls -l target/
+
+      # Étape 8 (optionnelle) : Build Docker image
+      - name: Build Docker image
+        if: github.event_name == 'push'
+        run: |
+          docker build -t be-pharmacy:latest .
+          echo "Docker image be-pharmacy:latest built successfully!"
