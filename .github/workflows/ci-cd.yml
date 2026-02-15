@@ -13,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: BE
+        working-directory: BE  # toutes les commandes s'exécutent dans le dossier BE
 
     steps:
       - name: Checkout repository
@@ -43,7 +43,7 @@ jobs:
         run: ls -l target/
 
       - name: Upload JAR as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4   # ✅ changée ici
         with:
           name: be-pharmacy-jar
           path: target/*.jar
