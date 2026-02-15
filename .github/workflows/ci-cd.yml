@@ -1,4 +1,4 @@
-name: CI-CD Spring Boot - BE-pharmacy
+name: CI-CD Spring Boot + Angular
 
 on:
   push:
@@ -11,45 +11,50 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: BE  # toutes les commandes s'exécutent dans le dossier BE
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      # 1. Checkout
+      - uses: actions/checkout@v3
 
-      - name: Set up JDK 17
+      # -------------------
+      # Backend Spring Boot
+      # -------------------
+      - name: Set up JDK 8
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 17
-
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          java-version: 8
 
       - name: Verify mvnw permissions
-        run: ls -l ./mvnw
+        run: ls -l BE/mvnw
 
-      - name: Build and package Maven project
+      - name: Build Backend
+        working-directory: BE
         run: ./mvnw clean package -B
 
-      - name: List target folder
-        run: ls -l target/
-
-      - name: Upload JAR as artifact
-        uses: actions/upload-artifact@v4   # ✅ changée ici
+      - name: Upload BE JAR
+        uses: actions/upload-artifact@v4
         with:
           name: be-pharmacy-jar
-          path: target/*.jar
+          path: BE/target/*.jar
 
-      - name: Build Docker image
-        if: github.event_name == 'push'
-        run: |
-          docker build --file Dockerfile.yml --tag be-pharmacy:latest --pull .
-          echo "Docker image be-pharmacy:latest built successfully!"
+      # -------------------
+      # Frontend Angular
+      # -------------------
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Angular dependencies
+        working-directory: FE
+        run: npm install
+
+      - name: Build Angular
+        working-directory: FE
+        run: npm run build -- --prod
+
+      - name: Upload Angular build
+        uses: actions/upload-artifact@v4
+        with:
+          name: fe-build
+          path: FE/dist/
