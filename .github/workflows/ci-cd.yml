@@ -56,46 +56,45 @@ jobs:
         run: |
           docker build --file Dockerfile.yml --tag be-pharmacy:latest --pull .
           echo "Docker image be-pharmacy:latest built successfully!"
+# ---------------------------------------------
+# Frontend (Angular) build
+# ---------------------------------------------
+frontend:
+  runs-on: ubuntu-latest
+  needs: backend   # Attend que le backend soit construit
 
-  # ---------------------------------------------
-  # Frontend (Angular) build
-  # ---------------------------------------------
-  frontend:
-    runs-on: ubuntu-latest
-    needs: backend   # Attend que le backend soit construit
+  defaults:
+    run:
+      working-directory: ./Fe  # Corrigé : chemin exact avec F majuscule
 
-    defaults:
-      run:
-        working-directory: FE  # dossier frontend
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('Fe/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('FE/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+    - name: Install dependencies
+      run: npm install
 
-      - name: Install dependencies
-        run: npm install
+    - name: Build Angular project
+      run: npm run build -- --prod
 
-      - name: Build Angular project
-        run: npm run build -- --prod
+    - name: List Angular dist folder
+      run: ls -l dist/
 
-      - name: List Angular dist folder
-        run: ls -l dist/
-
-      - name: Upload Angular build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: fe-pharmacy-dist
-          path: dist/
+    - name: Upload Angular build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: fe-pharmacy-dist
+        path: dist/
