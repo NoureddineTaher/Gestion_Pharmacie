@@ -1,0 +1,20 @@
+
+
+services:
+  backend:
+    build:
+      context: ./BE
+      dockerfile: Dockerfile
+    container_name: pharmacie-backend
+    ports:
+      - "8081:8081"
+
+  frontend:
+    build:
+      context: ./Fe
+      dockerfile: Dockerfile
+    container_name: pharmacie-frontend
+    ports:
+      - "4200:80"   # Accès via http://localhost:4200
+    depends_on:
+      - backend

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/pharmacies") // 🔥 Mapping global propre
+@RequestMapping("/pharmacie") // 🔥 Mapping global propre
 public class ParmacieController {
 
 	@Autowired
