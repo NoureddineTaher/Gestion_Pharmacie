@@ -39,11 +39,10 @@ public class PharmacieService {
 
 	// ✅ DELETE
 	public void deletePharmacie(int id) {
-
 		if (!pharmacierepository.existsById(id)) {
-			throw new RuntimeException("Pharmacie not found with id " + id);
+			throw new PharmacieAlreadyDeletedException(id);
 		}
-
 		pharmacierepository.deleteById(id);
 	}
+
 }
